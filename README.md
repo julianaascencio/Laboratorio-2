@@ -132,4 +132,14 @@ Se configuraron 3 interfaces:
 ip addr add 192.168.10.1/24 dev enp0s8
 ip addr add 192.168.20.1/24 dev enp0s9
 ```
+## Verificación del Router (Debian-Admin)
+
+Se realizaron pruebas de conectividad desde el nodo central hacia ambas subredes y hacia internet.
+
+```bash
+ping 192.168.10.10
+ping 192.168.20.10
+ping 8.8.8.8
+ping google.com
+```
 <img width="1030" height="1000" alt="image" src="https://github.com/user-attachments/assets/796f9cb8-877a-4a9c-a6c9-2f981973b9d8" />
