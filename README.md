@@ -143,3 +143,67 @@ ping 8.8.8.8
 ping google.com
 ```
 <img width="1030" height="1000" alt="image" src="https://github.com/user-attachments/assets/796f9cb8-877a-4a9c-a6c9-2f981973b9d8" />
+
+## Generación de tráfico con iPerf3
+
+Se realizó la generación de tráfico entre los hosts con el fin de validar la comunicación entre subredes y medir el rendimiento de la red configurada.
+
+---
+
+### Instalación de la herramienta
+
+En ambos hosts (Host1 y Host2) se ejecutaron los siguientes comandos:
+
+```bash
+apt update
+apt install -y iperf3
+```
+
+Durante la instalación se seleccionó la opción de no ejecutar iperf3 como demonio, ya que las pruebas se realizarán manualmente
+
+### Configuración de la prueba
+Se definieron los siguientes roles:
+- Host1: Cliente (genera tráfico)
+- Host2: Servidor (recibe tráfico)
+
+### Ejecución en Host2 (Servidor)
+En host2 se ejecuto:
+
+``` bash
+iperf3 -s
+```
+Esto permiete que el host quede escuchando conexiones en el puerto 5201
+
+### Ejecución en Host1 (Cliente)
+Desde Host1 se generó tráfico hacia Host2 con:
+
+```bash
+iperf3 -c 192.168.20.10 -t 20
+```
+Opcionalmente se utilizó:
+```bash
+iperf3 -c 192.168.20.10 -t 20 -i 1
+```
+para observar resultados por intervalos de tiempo.
+
+### Resultados obtenidos
+Durante la ejeción de la prueba se observo:
+
+-Transferencia continua de datos entre los hosts
+- Ancho de banda promedio entre 300 y 600 Mbits/sec
+- Comunicación estable entre subredes
+
+Esto confirma que:
+
+✔ El enrutamiento configurado en Debian-Admin es funcional
+✔ La conectividad entre Host1 y Host2 es correcta
+✔ La red permite transmisión de datos sin pérdida significativa
+
+Se adjunta evidencia de:
+- Ejecución de iperf3 en Host2 (modo servidor)
+- Ejecución de iperf3 en Host1 (modo cliente)
+- Resultados de transferencia y ancho de banda
+
+  <img width="1911" height="1005" alt="image" src="https://github.com/user-attachments/assets/65ce377c-03da-4009-973d-bd8776bd494d" />
+
+La prueba con iPerf3 permitió validar el correcto funcionamiento de la red implementada, evidenciando la comunicación entre subredes y el rendimiento del enlace a través del router Debian-Admin.
