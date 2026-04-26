@@ -239,6 +239,8 @@ cp /root/captura_final.pcap /mnt/Shared/
 
 <img width="1017" height="958" alt="image" src="https://github.com/user-attachments/assets/a27b044f-06cb-4aa1-bee7-5032d0a30919" />
 
+Esto permitió abrir el archivo en Wireshark para su análisis.
+
 ### Comunicación entre subredes
 
 Se observa tráfico ICMP entre las direcciones:
