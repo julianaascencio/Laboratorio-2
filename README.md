@@ -207,3 +207,29 @@ Se adjunta evidencia de:
   <img width="1911" height="1005" alt="image" src="https://github.com/user-attachments/assets/65ce377c-03da-4009-973d-bd8776bd494d" />
 
 La prueba con iPerf3 permitió validar el correcto funcionamiento de la red implementada, evidenciando la comunicación entre subredes y el rendimiento del enlace a través del router Debian-Admin.
+
+<img width="508" height="334" alt="image" src="https://github.com/user-attachments/assets/4ebcf77d-6cb3-4108-b08f-c3b043a57c00" />
+
+<img width="847" height="330" alt="image" src="https://github.com/user-attachments/assets/3ce4ba33-6072-4035-9729-a52c4d5bc4b9" />
+
+<img width="1017" height="958" alt="image" src="https://github.com/user-attachments/assets/a27b044f-06cb-4aa1-bee7-5032d0a30919" />
+
+### Comunicación entre subredes
+
+Se observa tráfico ICMP entre las direcciones:
+
+- 192.168.10.10
+- 192.168.20.10
+
+Esto evidencia que los hosts en diferentes subredes pueden comunicarse correctamente a través del router Debian-Admin.
+<img width="1009" height="836" alt="image" src="https://github.com/user-attachments/assets/e5c20535-7338-4e69-bc23-fee077cbd256" />
+
+### Comunicación hacia internet
+
+Se observa tráfico ICMP hacia la dirección 8.8.8.8, lo que confirma que los hosts tienen acceso a internet a través del NAT configurado en el router.
+<img width="1028" height="1001" alt="image" src="https://github.com/user-attachments/assets/4bad2523-b047-4244-b278-1e10be81b4f0" />
+
+### Tráfico de rendimiento (iperf3)
+
+Se identifica tráfico TCP en el puerto 5201, correspondiente a la prueba de rendimiento realizada con iperf3 entre los hosts.
+<img width="1028" height="1007" alt="image" src="https://github.com/user-attachments/assets/d1361d0e-1e62-4bbc-bf7e-12c8dcf2be19" />
