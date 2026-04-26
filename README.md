@@ -42,12 +42,6 @@ Se seleccionó la opción de instalación gráfica, configurando parámetros bá
 El sistema se instaló en modo mínimo, sin entorno gráfico, con el objetivo de optimizar recursos para su uso como router dentro de la topología de red.
 <img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/174ad471-e306-41af-960b-c838b7c0d7fd" />
 
-<img width="1024" height="768" alt="image" src="https://github.com/user-attachments/assets/b5817487-dce3-47bd-97f3-bb0884c3efe7" />
-
-<img width="1024" height="768" alt="image" src="https://github.com/user-attachments/assets/ac2b39c3-ba56-47af-b78a-3146862511c0" />
-
-<img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/6942bde8-ab21-435e-bcce-30e4da14f404" />
-
 ---
 
 ## Host1
@@ -76,11 +70,7 @@ ip link set enp0s3 up
 ip route add default via 192.168.10.1
 ```
 
-<img width="784" height="371" alt="image" src="https://github.com/user-attachments/assets/0f8c680b-35a4-4afd-9063-b356bdc9a7a4" />
-Login en consola
-
-<img width="823" height="246" alt="image" src="https://github.com/user-attachments/assets/d20fe5fe-1a73-40f1-86cc-565c27551566" />
-
+<img width="1280" height="925" alt="image" src="https://github.com/user-attachments/assets/b4ba94b1-14ca-4b06-a996-48d6d2dcf218" />
 
 ---
 
@@ -110,11 +100,7 @@ ip addr add 192.168.20.10/24 dev enp0s3
 ip link set enp0s3 up
 ip route add default via 192.168.20.1
 ```
-
-<img width="783" height="910" alt="image" src="https://github.com/user-attachments/assets/211aa70a-c7c0-478d-8c27-ce248e5e2fe2" />
-
-<img width="820" height="332" alt="image" src="https://github.com/user-attachments/assets/00801b3e-4fd9-4935-83df-c6939b34afe4" />
-
+<img width="951" height="1004" alt="image" src="https://github.com/user-attachments/assets/167b7c8a-e3dd-42da-90ba-7bdadd50931f" />
 
   # Configuración de Red
 
@@ -132,6 +118,8 @@ Se configuraron 3 interfaces:
 ip addr add 192.168.10.1/24 dev enp0s8
 ip addr add 192.168.20.1/24 dev enp0s9
 ```
+<img width="983" height="920" alt="image" src="https://github.com/user-attachments/assets/eeb7155a-32f3-404d-9472-2a27668980c3" />
+
 ## Verificación del Router (Debian-Admin)
 
 Se realizaron pruebas de conectividad desde el nodo central hacia ambas subredes y hacia internet.
@@ -270,3 +258,13 @@ Se observa tráfico ICMP hacia la dirección 8.8.8.8, lo que confirma que los ho
 
 Se identifica tráfico TCP en el puerto 5201, correspondiente a la prueba de rendimiento realizada con iperf3 entre los hosts.
 <img width="1028" height="1007" alt="image" src="https://github.com/user-attachments/assets/d1361d0e-1e62-4bbc-bf7e-12c8dcf2be19" />
+
+## Conclusión
+
+En este laboratorio se logró implementar correctamente una red segmentada en dos subredes interconectadas mediante un router basado en Debian.
+
+Se configuró el enrutamiento entre subredes, permitiendo la comunicación entre los hosts, y se habilitó el acceso a internet mediante la implementación de NAT. Las pruebas de conectividad confirmaron el correcto funcionamiento de la red, evidenciando la comunicación entre los equipos y la salida hacia internet.
+
+Adicionalmente, mediante el uso de iperf3 se validó el rendimiento de la red, observando una transmisión estable de datos entre los hosts. Finalmente, el análisis de tráfico con Wireshark permitió identificar distintos protocolos como ICMP, DNS y TCP, comprobando el flujo de paquetes a través del router.
+
+En conjunto, el laboratorio permitió comprender de manera práctica el funcionamiento del enrutamiento, la traducción de direcciones (NAT) y las herramientas de monitoreo de red.
