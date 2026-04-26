@@ -208,9 +208,34 @@ Se adjunta evidencia de:
 
 La prueba con iPerf3 permitió validar el correcto funcionamiento de la red implementada, evidenciando la comunicación entre subredes y el rendimiento del enlace a través del router Debian-Admin.
 
+### Configuración de carpeta compartida
+
+Se configuró una carpeta compartida en VirtualBox para facilitar la transferencia de archivos entre la máquina virtual y el sistema anfitrión.
+
+Se habilitó la opción de automontaje y se asignó el nombre "Shared", permitiendo exportar la captura de tráfico generada en el router hacia el equipo local para su análisis en Wireshark.
+
 <img width="508" height="334" alt="image" src="https://github.com/user-attachments/assets/4ebcf77d-6cb3-4108-b08f-c3b043a57c00" />
 
+### Captura de tráfico en el router
+
+Se utilizó la herramienta `tcpdump` en la interfaz enp0s8 del router Debian-Admin para capturar el tráfico de la red interna.
+
+```bash
+tcpdump -i enp0s8 -w captura_final.pcap
+```
+
 <img width="847" height="330" alt="image" src="https://github.com/user-attachments/assets/3ce4ba33-6072-4035-9729-a52c4d5bc4b9" />
+
+La captura permitió registrar paquetes ICMP, DNS, NTP y TCP generados durante las pruebas de conectividad y rendimiento.
+
+### Exportación de la captura
+
+El archivo de captura fue copiado desde la máquina virtual hacia el sistema anfitrión utilizando la carpeta compartida configurada previamente.
+
+```bash
+mount -t vboxsf Shared /mnt/Shared
+cp /root/captura_final.pcap /mnt/Shared/
+```
 
 <img width="1017" height="958" alt="image" src="https://github.com/user-attachments/assets/a27b044f-06cb-4aa1-bee7-5032d0a30919" />
 
@@ -222,7 +247,17 @@ Se observa tráfico ICMP entre las direcciones:
 - 192.168.20.10
 
 Esto evidencia que los hosts en diferentes subredes pueden comunicarse correctamente a través del router Debian-Admin.
+
 <img width="1009" height="836" alt="image" src="https://github.com/user-attachments/assets/e5c20535-7338-4e69-bc23-fee077cbd256" />
+
+**Análisis:**
+
+En la captura se observa tráfico ICMP (Echo Request y Echo Reply) entre las direcciones:
+
+- 192.168.10.10 (Host1)
+- 192.168.20.10 (Host2)
+
+Esto confirma que el router Debian-Admin está realizando correctamente el enrutamiento entre subredes.
 
 ### Comunicación hacia internet
 
