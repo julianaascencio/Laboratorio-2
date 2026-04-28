@@ -24,11 +24,24 @@ La segmentación permite aislar dominios de broadcast, mejorar la organización 
 
 ## Tecnologías utilizadas
 
-- VirtualBox
-- Debian 13
-- Redes internas
-- NAT
-- iptables
+## Tecnologías utilizadas
+
+Durante el desarrollo del laboratorio se utilizaron las siguientes tecnologías:
+
+- **VirtualBox**: Plataforma de virtualización para la creación de las máquinas virtuales.
+- **Debian 13**: Sistema operativo base utilizado en todos los nodos.
+- **Redes internas y NAT**: Configuración de red en VirtualBox para segmentación y acceso a internet.
+- **IP forwarding (Linux)**: Habilitación del reenvío de paquetes para funcionamiento como router.
+- **iptables**: Implementación de NAT para permitir salida a internet.
+- **iPerf3**: Generación y medición de tráfico de red (throughput).
+- **tcpdump**: Captura y análisis de paquetes en la red.
+- **Wireshark**: Análisis detallado de capturas de tráfico.
+- **Prometheus**: Recolección y almacenamiento de métricas del sistema.
+- **Node Exporter**: Exportación de métricas del sistema para Prometheus.
+- **Grafana**: Visualización de métricas mediante dashboards.
+- **Zabbix Agent**: Monitoreo basado en agente del sistema.
+- **softflowd**: Simulación de exportación de flujos tipo NetFlow.
+- **tc (Traffic Control)**: Implementación de políticas de QoS para control de tráfico.
 
 ## Objetivos
 
