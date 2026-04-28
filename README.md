@@ -396,6 +396,7 @@ Un flujo se define por:
 - Puerto origen/destino
 - Protocolo
 - Cantidad de datos
+  
 Se implementó el análisis de flujo de red utilizando la herramienta softflowd.
 Se generó tráfico entre Host1 y Host2 mediante iPerf3, permitiendo identificar los flujos de comunicación.
 Posteriormente, se capturó el tráfico utilizando tcpdump en el router.
