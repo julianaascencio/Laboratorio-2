@@ -24,33 +24,57 @@ La segmentación permite aislar dominios de broadcast, mejorar la organización 
 
 ## Tecnologías utilizadas
 
-## Tecnologías utilizadas
+Las tecnologías implementadas en el laboratorio se agrupan según su función dentro de la arquitectura de red:
 
-Durante el desarrollo del laboratorio se utilizaron las siguientes tecnologías:
+### 🔧 Virtualización y sistema operativo
+- **VirtualBox**: Plataforma de virtualización utilizada para desplegar la infraestructura.
+- **Debian 13**: Sistema operativo base en todos los nodos (router y hosts).
 
-- **VirtualBox**: Plataforma de virtualización para la creación de las máquinas virtuales.
-- **Debian 13**: Sistema operativo base utilizado en todos los nodos.
-- **Redes internas y NAT**: Configuración de red en VirtualBox para segmentación y acceso a internet.
-- **IP forwarding (Linux)**: Habilitación del reenvío de paquetes para funcionamiento como router.
-- **iptables**: Implementación de NAT para permitir salida a internet.
-- **iPerf3**: Generación y medición de tráfico de red (throughput).
-- **tcpdump**: Captura y análisis de paquetes en la red.
-- **Wireshark**: Análisis detallado de capturas de tráfico.
+### 🌐 Redes y conectividad
+- **Redes internas (VirtualBox)**: Segmentación de la red en subredes aisladas.
+- **NAT**: Permite el acceso a internet desde redes privadas.
+- **IP forwarding (Linux)**: Habilita el enrutamiento entre subredes.
+- **iptables**: Configuración de reglas de NAT y filtrado de tráfico.
+
+### 📡 Generación y análisis de tráfico
+- **iPerf3**: Generación de tráfico y medición del ancho de banda.
+- **tcpdump**: Captura de paquetes en tiempo real.
+- **Wireshark**: Análisis detallado de tráfico a nivel de paquetes.
+
+### 📊 Monitoreo y observabilidad
 - **Prometheus**: Recolección y almacenamiento de métricas del sistema.
 - **Node Exporter**: Exportación de métricas del sistema para Prometheus.
-- **Grafana**: Visualización de métricas mediante dashboards.
-- **Zabbix Agent**: Monitoreo basado en agente del sistema.
+- **Grafana**: Visualización de métricas mediante dashboards interactivos.
+- **Zabbix Agent**: Monitoreo del sistema basado en agentes.
+
+### 🔍 Análisis de flujo de red
 - **softflowd**: Simulación de exportación de flujos tipo NetFlow.
-- **tc (Traffic Control)**: Implementación de políticas de QoS para control de tráfico.
+- **NetFlow / IPFIX (concepto)**: Análisis del tráfico basado en flujos.
+
+### ⚙️ Control de tráfico
+- **tc (Traffic Control)**: Implementación de políticas de calidad de servicio (QoS) para limitar y controlar el ancho de banda.
 
 ## Objetivos
 
-- Implementar segmentación de red
-- Configurar routing entre subredes
-- Habilitar acceso a internet
-- Validar conectividad entre hosts
+### Objetivo general
+Implementar una red segmentada con enrutamiento entre subredes, incorporando herramientas de monitoreo y análisis de tráfico para evaluar el comportamiento de la red y aplicar políticas de control.
 
-  # Instalación de Máquinas Virtuales
+---
+
+### Objetivos específicos
+
+- Diseñar e implementar una arquitectura de red segmentada en múltiples subredes.
+- Configurar un nodo central como router utilizando Debian, habilitando el reenvío de paquetes.
+- Implementar NAT para permitir el acceso a internet desde redes privadas.
+- Verificar la conectividad entre hosts mediante pruebas de red (ping).
+- Generar tráfico controlado utilizando iPerf3 para evaluar el rendimiento de la red.
+- Capturar y analizar paquetes con tcpdump y Wireshark para identificar protocolos y flujos de comunicación.
+- Implementar monitoreo de sistema mediante Prometheus y Grafana, visualizando métricas en tiempo real.
+- Configurar el agente de Zabbix para monitoreo adicional basado en agentes.
+- Analizar el tráfico de red utilizando el concepto de flujos (NetFlow) con herramientas como softflowd.
+- Aplicar políticas de control de tráfico (QoS) utilizando tc para observar su impacto en el rendimiento de la red.
+
+# Instalación de Máquinas Virtuales
 
 ## Debian-Admin
 
