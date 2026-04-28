@@ -259,12 +259,85 @@ Se observa tráfico ICMP hacia la dirección 8.8.8.8, lo que confirma que los ho
 Se identifica tráfico TCP en el puerto 5201, correspondiente a la prueba de rendimiento realizada con iperf3 entre los hosts.
 <img width="1028" height="1007" alt="image" src="https://github.com/user-attachments/assets/d1361d0e-1e62-4bbc-bf7e-12c8dcf2be19" />
 
-## Conclusión
+## Fase 6 -Grafana & Prometheus
+## Monitoreo con Prometheus y Grafana
 
-En este laboratorio se logró implementar correctamente una red segmentada en dos subredes interconectadas mediante un router basado en Debian.
+Se implementó un sistema de monitoreo utilizando Prometheus y Grafana para visualizar métricas en tiempo real del sistema.
 
-Se configuró el enrutamiento entre subredes, permitiendo la comunicación entre los hosts, y se habilitó el acceso a internet mediante la implementación de NAT. Las pruebas de conectividad confirmaron el correcto funcionamiento de la red, evidenciando la comunicación entre los equipos y la salida hacia internet.
+### Configuración
 
-Adicionalmente, mediante el uso de iperf3 se validó el rendimiento de la red, observando una transmisión estable de datos entre los hosts. Finalmente, el análisis de tráfico con Wireshark permitió identificar distintos protocolos como ICMP, DNS y TCP, comprobando el flujo de paquetes a través del router.
+Se instaló Prometheus junto con Node Exporter para recolectar métricas del sistema.
 
-En conjunto, el laboratorio permitió comprender de manera práctica el funcionamiento del enrutamiento, la traducción de direcciones (NAT) y las herramientas de monitoreo de red.
+Posteriormente, se instaló Grafana y se configuró la conexión con Prometheus como fuente de datos.
+
+Se creó un dashboard personalizado con:
+
+- Estado de servicios
+- Uso de CPU
+- Memoria disponible
+
+### Evidencias
+
+<img width="476" height="503" alt="login_grafana" src="https://github.com/user-attachments/assets/3ec16389-3e17-420d-bbd3-88f6374f8dcc" />
+
+<img width="472" height="187" alt="configuracion_prometheus_grafana" src="https://github.com/user-attachments/assets/40be8084-167b-4414-b33d-897122c3b667" />
+
+<img width="338" height="93" alt="protmetheus_API" src="https://github.com/user-attachments/assets/d9d7ed34-4d66-4fc0-ada9-23edfecbaaf7" />
+
+
+<img width="475" height="371" alt="dashboard_grafana" src="https://github.com/user-attachments/assets/30e03e97-16cd-43d8-a250-6b40e6ca1507" />
+
+## Fase 7 - Zabbix
+## Monitoreo con Zabbix
+
+Se instaló y configuró el agente de Zabbix en el nodo Debian-Admin para monitorear el estado del sistema.
+
+### Configuración
+
+Se definieron los parámetros:
+
+- Server=127.0.0.1
+- ServerActive=127.0.0.1
+- Hostname=Debian-Admin
+
+Se verificó que el servicio se encuentre activo.
+
+### Evidencia
+
+<img width="193" height="112" alt="configuracion_zabbix" src="https://github.com/user-attachments/assets/0d474562-6854-4748-b970-4b0a073ebf1f" />
+
+<img width="478" height="289" alt="status_zabbix" src="https://github.com/user-attachments/assets/1145d221-afe7-4ad5-9be7-18a5648fe861" />
+
+## Fase 8 - NetFlow
+## Análisis de tráfico de red (NetFlow)
+
+Se implementó el análisis de flujo de red utilizando la herramienta softflowd.
+
+Se generó tráfico entre Host1 y Host2 mediante iPerf3, permitiendo identificar los flujos de comunicación.
+
+Posteriormente, se capturó el tráfico utilizando tcpdump en el router.
+
+Se observaron paquetes TCP en el puerto 5201 correspondientes a iPerf3.
+
+### Evidencia
+<img width="1902" height="929" alt="netflow_tcpdump" src="https://github.com/user-attachments/assets/698077a0-bf97-4c4b-854c-a5fbe6ea05c4" />
+
+<img width="1902" height="929" alt="netflow_tcpdump" src="https://github.com/user-attachments/assets/dc773b8c-e5a3-437f-a9e3-d11d2bfc9585" />
+
+# Punto 2 - QoS
+## Control de tráfico (QoS)
+
+Se simuló tráfico de red utilizando iPerf3, generando un flujo constante de datos entre los hosts.
+
+Posteriormente, se aplicó una política de control de tráfico utilizando la herramienta tc en el router Debian-Admin.
+
+tc qdisc add dev enp0s8 root tbf rate 20mbit
+
+Se observó una reducción en la velocidad de transferencia, evidenciando el impacto del control de tráfico.
+
+### Evidencia
+<img width="833" height="494" alt="trafico_normal_sin_prioridad" src="https://github.com/user-attachments/assets/745a8216-8b20-4b20-a104-c6537a7cbf05" />
+
+<img width="1915" height="939" alt="trafico_red_con_qos_estable" src="https://github.com/user-attachments/assets/5394ca16-b5bf-4380-9dda-a00cf93ab279" />
+
+
