@@ -328,6 +328,9 @@ Se identifica tráfico TCP en el puerto 5201, correspondiente a la prueba de ren
 ## 8. Monitoreo con Prometheus y Grafana
 ### Monitoreo con Prometheus y Grafana
 
+Prometheus utiliza un modelo de recolección tipo "pull", donde consulta periódicamente los endpoints expuestos por Node Exporter.
+Esto permite obtener métricas del sistema como CPU, memoria y estado de servicios en tiempo real, facilitando el monitoreo continuo del comportamiento del servidor.
+
 Se implementó un sistema de monitoreo utilizando Prometheus y Grafana para visualizar métricas en tiempo real del sistema.
 
 ### Configuración
@@ -357,6 +360,9 @@ Prometheus utiliza un modelo pull, consultando periódicamente los endpoints.
 
 ## 9. Monitoreo con Zabbix
 ### Monitoreo con Zabbix
+Zabbix complementa el monitoreo al trabajar bajo un modelo basado en agentes, permitiendo la recolección de métricas desde el host de forma activa y pasiva.
+A diferencia de Prometheus, Zabbix está orientado a entornos empresariales donde se requiere monitoreo centralizado y generación de alertas.
+
 Se configuró Zabbix Agent en el nodo Debian-Admin.
 
 ### Función
@@ -379,6 +385,9 @@ Zabbix permite:
 
 ## 10. Análisis de flujo de red (NetFlow)
 ### Análisis de tráfico de red (NetFlow)
+A diferencia de herramientas como tcpdump que analizan paquetes individuales, NetFlow permite analizar flujos de tráfico, es decir, agrupaciones de paquetes que comparten características como origen, destino, puerto y protocolo.
+Esto reduce la cantidad de información procesada y permite entender patrones de tráfico en la red.
+
 Se utilizó softflowd para simular exportación de flujos.
 
 ### Concepto de flujo
@@ -399,6 +408,8 @@ Se observaron paquetes TCP en el puerto 5201 correspondientes a iPerf3.
 
 # Punto 2 - QoS
 ## Control de tráfico (QoS)
+La aplicación de QoS mediante tc permitió limitar el ancho de banda disponible, afectando directamente el throughput observado en iPerf3.
+Esto demuestra cómo las políticas de control de tráfico pueden priorizar o restringir el uso de la red, siendo fundamentales en escenarios donde múltiples aplicaciones compiten por recursos.
 
 Se simuló tráfico de red utilizando iPerf3, generando un flujo constante de datos entre los hosts. Posteriormente, se aplicó una política de control de tráfico utilizando la herramienta tc en el router Debian-Admin.
 
@@ -425,3 +436,4 @@ QoS se usa en redes para priorizar tráfico crítico (video, VoIP, etc.)
 En este laboratorio se implementó una red segmentada con enrutamiento y acceso a internet mediante NAT, validando la conectividad entre subredes. 
 Se generó y analizó tráfico de red con herramientas como iPerf3 y tcpdump, y se integraron soluciones de monitoreo como Prometheus, Grafana y Zabbix para visualizar el estado del sistema. 
 Finalmente, se aplicaron políticas de control de tráfico (QoS), evidenciando su impacto en el rendimiento de la red. Esto demuestra la importancia de combinar monitoreo y gestión para optimizar el funcionamiento de infraestructuras de red.
+El laboratorio evidencia cómo la integración de herramientas de monitoreo y control permite no solo observar el comportamiento de la red, sino también intervenir activamente en su rendimiento.
