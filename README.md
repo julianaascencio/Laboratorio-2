@@ -1,13 +1,26 @@
 # Laboratorio de Redes - Segmentación y Monitoreo
 
-## Descripción
-Este laboratorio consiste en la implementación de una red segmentada en dos subredes utilizando máquinas virtuales, configurando un nodo central como router con NAT para permitir comunicación entre redes y acceso a internet.
+## Integrantes
+Lesly Juliana Ascencio Peréz
 
-## Topología
+## 1. Introducción
+En este laboratorio se implementó una arquitectura de red segmentada basada en máquinas virtuales, con el objetivo de simular un entorno real donde múltiples subredes se comunican a través de un router central.
+Adicionalmente, se integraron herramientas de monitoreo y análisis de tráfico que permiten observar el comportamiento de la red en tiempo real, así como aplicar políticas de control (QoS) para gestionar el uso del ancho de banda.
 
+
+
+## 2. Diseño de la arquitectura de red
+Se diseñó una topología compuesta por tres nodos:
+
+- Debian-Admin: Router central con NAT
+- Host1: Cliente en Subred 1
+- Host2: Servidor en Subred 2
+
+### Segmentación de red
 - Subred 1: 192.168.10.0/24
 - Subred 2: 192.168.20.0/24
-- Router: Debian-Admin
+
+La segmentación permite aislar dominios de broadcast, mejorar la organización de la red y simular entornos empresariales donde diferentes departamentos operan en redes separadas.
 
 ## Tecnologías utilizadas
 
@@ -40,26 +53,27 @@ Se instaló Debian 13 en modo mínimo sin entorno gráfico, con el objetivo de o
 Se realizó la instalación del sistema operativo Debian 13 utilizando una imagen ISO oficial en una máquina virtual creada en VirtualBox.
 Se seleccionó la opción de instalación gráfica, configurando parámetros básicos como idioma, red y particionado automático del disco.
 El sistema se instaló en modo mínimo, sin entorno gráfico, con el objetivo de optimizar recursos para su uso como router dentro de la topología de red.
+
 <img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/174ad471-e306-41af-960b-c838b7c0d7fd" />
 
 ---
 
-## Host1
+## 3. Configuración de direccionamiento IP
 
-Se instaló Debian como cliente en la subred 1.
+Se asignaron direcciones IP estáticas para garantizar control total sobre el entorno:
 
-### Configuración:
-- RAM: 1024 MB
-- CPU: 1
-- Disco: 10 GB
-- 
-## Host1 (Subred 1)
+- Host1
+IP: 192.168.10.10/24
+Gateway: 192.168.10.1
 
-El Host1 fue configurado como un equipo cliente dentro de la subred 1, permitiendo validar la conectividad hacia el router y otras redes.
+- Host2
+IP: 192.168.20.10/24
+Gateway: 192.168.20.1
 
+El uso de gateways permite enrutar tráfico fuera de la subred local hacia el router.
 ---
 
-### Configuración de red
+## Host1
 
 Se asignó una dirección IP estática correspondiente a la subred 1:
 
@@ -84,13 +98,7 @@ Se creó a partir de clonación de Host1.
 - 
 ## Host2 (Subred 2)
 
-El Host2 fue creado a partir de la clonación de Host1, con el objetivo de agilizar la implementación del laboratorio.
-
-Posteriormente, se realizaron ajustes para adaptarlo a la subred 2.
-
----
-
-### Configuración de red
+El Host2 fue creado a partir de la clonación de Host1, con el objetivo de agilizar la implementación del laboratorio. Posteriormente, se realizaron ajustes para adaptarlo a la subred 2.
 
 Se asignó una dirección IP estática correspondiente a la subred 2:
 
@@ -102,15 +110,26 @@ ip route add default via 192.168.20.1
 ```
 <img width="951" height="1004" alt="image" src="https://github.com/user-attachments/assets/167b7c8a-e3dd-42da-90ba-7bdadd50931f" />
 
-  # Configuración de Red
 
-## Debian-Admin (Router)
+## Configuración del router (Debian-Admin)
+El router se configuró con tres interfaces de red:
 
-Se configuraron 3 interfaces:
+enp0s3 → NAT (salida a internet)
+enp0s8 → Subred 1
+enp0s9 → Subred 2
+Habilitación del reenvío de paquetes
+```bash
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
 
-- enp0s3 → NAT (internet)
-- enp0s8 → Subred1
-- enp0s9 → Subred2
+Esto activa el kernel de Linux para funcionar como router de capa 3.
+
+## NAT (traducción de direcciones)
+
+Se utilizó NAT para permitir que las subredes privadas accedan a internet mediante la interfaz NAT.
+
+Concepto clave:
+El NAT traduce direcciones privadas (RFC1918) a una dirección pública.
 
 ### Configuración IP
 
@@ -120,7 +139,7 @@ ip addr add 192.168.20.1/24 dev enp0s9
 ```
 <img width="983" height="920" alt="image" src="https://github.com/user-attachments/assets/eeb7155a-32f3-404d-9472-2a27668980c3" />
 
-## Verificación del Router (Debian-Admin)
+## 5. Validación de conectividad
 
 Se realizaron pruebas de conectividad desde el nodo central hacia ambas subredes y hacia internet.
 
@@ -132,7 +151,7 @@ ping google.com
 ```
 <img width="1030" height="1000" alt="image" src="https://github.com/user-attachments/assets/796f9cb8-877a-4a9c-a6c9-2f981973b9d8" />
 
-## Generación de tráfico con iPerf3
+## 6. Generación y análisis de tráfico (iPerf3)
 
 Se realizó la generación de tráfico entre los hosts con el fin de validar la comunicación entre subredes y medir el rendimiento de la red configurada.
 
@@ -150,6 +169,7 @@ apt install -y iperf3
 Durante la instalación se seleccionó la opción de no ejecutar iperf3 como demonio, ya que las pruebas se realizarán manualmente
 
 ### Configuración de la prueba
+
 Se definieron los siguientes roles:
 - Host1: Cliente (genera tráfico)
 - Host2: Servidor (recibe tráfico)
@@ -163,6 +183,7 @@ iperf3 -s
 Esto permiete que el host quede escuchando conexiones en el puerto 5201
 
 ### Ejecución en Host1 (Cliente)
+
 Desde Host1 se generó tráfico hacia Host2 con:
 
 ```bash
@@ -182,10 +203,9 @@ Durante la ejeción de la prueba se observo:
 - Comunicación estable entre subredes
 
 Esto confirma que:
-
-✔ El enrutamiento configurado en Debian-Admin es funcional
-✔ La conectividad entre Host1 y Host2 es correcta
-✔ La red permite transmisión de datos sin pérdida significativa
+- El enrutamiento configurado en Debian-Admin es funcional
+- La conectividad entre Host1 y Host2 es correcta
+- La red permite transmisión de datos sin pérdida significativa
 
 Se adjunta evidencia de:
 - Ejecución de iperf3 en Host2 (modo servidor)
@@ -204,13 +224,22 @@ Se habilitó la opción de automontaje y se asignó el nombre "Shared", permitie
 
 <img width="508" height="334" alt="image" src="https://github.com/user-attachments/assets/4ebcf77d-6cb3-4108-b08f-c3b043a57c00" />
 
-### Captura de tráfico en el router
+### 7. Captura y análisis de tráfico
 
 Se utilizó la herramienta `tcpdump` en la interfaz enp0s8 del router Debian-Admin para capturar el tráfico de la red interna.
 
 ```bash
 tcpdump -i enp0s8 -w captura_final.pcap
 ```
+
+### Análisis técnico
+
+Se identificaron:
+
+ICMP → pruebas de conectividad
+TCP → tráfico de iPerf3
+DNS → resolución de nombres
+Esto permite observar tráfico a nivel de capa 3 y 4.
 
 <img width="847" height="330" alt="image" src="https://github.com/user-attachments/assets/3ce4ba33-6072-4035-9729-a52c4d5bc4b9" />
 
@@ -259,22 +288,25 @@ Se observa tráfico ICMP hacia la dirección 8.8.8.8, lo que confirma que los ho
 Se identifica tráfico TCP en el puerto 5201, correspondiente a la prueba de rendimiento realizada con iperf3 entre los hosts.
 <img width="1028" height="1007" alt="image" src="https://github.com/user-attachments/assets/d1361d0e-1e62-4bbc-bf7e-12c8dcf2be19" />
 
-## Fase 6 -Grafana & Prometheus
-## Monitoreo con Prometheus y Grafana
+## 8. Monitoreo con Prometheus y Grafana
+### Monitoreo con Prometheus y Grafana
 
 Se implementó un sistema de monitoreo utilizando Prometheus y Grafana para visualizar métricas en tiempo real del sistema.
 
 ### Configuración
 
-Se instaló Prometheus junto con Node Exporter para recolectar métricas del sistema.
+Se implementó un sistema de monitoreo basado en métricas.
 
-Posteriormente, se instaló Grafana y se configuró la conexión con Prometheus como fuente de datos.
-
-Se creó un dashboard personalizado con:
-
-- Estado de servicios
-- Uso de CPU
+### Arquitectura
+- Node Exporter → expone métricas del sistema
+- Prometheus → recolecta y almacena métricas
+- Grafana → visualiza los datos
+- Métricas monitoreadas
+- CPU (uso por núcleo)
 - Memoria disponible
+- Estado de servicios
+
+Prometheus utiliza un modelo pull, consultando periódicamente los endpoints.
 
 ### Evidencias
 
@@ -284,39 +316,43 @@ Se creó un dashboard personalizado con:
 
 <img width="338" height="93" alt="protmetheus_API" src="https://github.com/user-attachments/assets/d9d7ed34-4d66-4fc0-ada9-23edfecbaaf7" />
 
-
 <img width="475" height="371" alt="dashboard_grafana" src="https://github.com/user-attachments/assets/30e03e97-16cd-43d8-a250-6b40e6ca1507" />
 
-## Fase 7 - Zabbix
-## Monitoreo con Zabbix
+## 9. Monitoreo con Zabbix
+### Monitoreo con Zabbix
+Se configuró Zabbix Agent en el nodo Debian-Admin.
 
-Se instaló y configuró el agente de Zabbix en el nodo Debian-Admin para monitorear el estado del sistema.
+### Función
+Permite monitoreo basado en agentes, complementando Prometheus.
 
 ### Configuración
-
-Se definieron los parámetros:
-
 - Server=127.0.0.1
 - ServerActive=127.0.0.1
 - Hostname=Debian-Admin
 
-Se verificó que el servicio se encuentre activo.
-
+Zabbix permite:
+- monitoreo activo y pasivo
+- recolección estructurada de métricas
+  
 ### Evidencia
 
 <img width="193" height="112" alt="configuracion_zabbix" src="https://github.com/user-attachments/assets/0d474562-6854-4748-b970-4b0a073ebf1f" />
 
 <img width="478" height="289" alt="status_zabbix" src="https://github.com/user-attachments/assets/1145d221-afe7-4ad5-9be7-18a5648fe861" />
 
-## Fase 8 - NetFlow
-## Análisis de tráfico de red (NetFlow)
+## 10. Análisis de flujo de red (NetFlow)
+### Análisis de tráfico de red (NetFlow)
+Se utilizó softflowd para simular exportación de flujos.
 
+### Concepto de flujo
+Un flujo se define por:
+- IP origen/destino
+- Puerto origen/destino
+- Protocolo
+- Cantidad de datos
 Se implementó el análisis de flujo de red utilizando la herramienta softflowd.
-
 Se generó tráfico entre Host1 y Host2 mediante iPerf3, permitiendo identificar los flujos de comunicación.
-
 Posteriormente, se capturó el tráfico utilizando tcpdump en el router.
-
 Se observaron paquetes TCP en el puerto 5201 correspondientes a iPerf3.
 
 ### Evidencia
@@ -327,17 +363,28 @@ Se observaron paquetes TCP en el puerto 5201 correspondientes a iPerf3.
 # Punto 2 - QoS
 ## Control de tráfico (QoS)
 
-Se simuló tráfico de red utilizando iPerf3, generando un flujo constante de datos entre los hosts.
+Se simuló tráfico de red utilizando iPerf3, generando un flujo constante de datos entre los hosts. Posteriormente, se aplicó una política de control de tráfico utilizando la herramienta tc en el router Debian-Admin.
 
-Posteriormente, se aplicó una política de control de tráfico utilizando la herramienta tc en el router Debian-Admin.
-
+### Funcionamiento
+- Se limita el ancho de banda
+- Se controla la tasa de transmisión
+  
+```bash
 tc qdisc add dev enp0s8 root tbf rate 20mbit
+```
 
 Se observó una reducción en la velocidad de transferencia, evidenciando el impacto del control de tráfico.
+
+### Aplicación real:
+QoS se usa en redes para priorizar tráfico crítico (video, VoIP, etc.)
 
 ### Evidencia
 <img width="833" height="494" alt="trafico_normal_sin_prioridad" src="https://github.com/user-attachments/assets/745a8216-8b20-4b20-a104-c6537a7cbf05" />
 
 <img width="1915" height="939" alt="trafico_red_con_qos_estable" src="https://github.com/user-attachments/assets/5394ca16-b5bf-4380-9dda-a00cf93ab279" />
 
+## Conclusión
 
+En este laboratorio se implementó una red segmentada con enrutamiento y acceso a internet mediante NAT, validando la conectividad entre subredes. 
+Se generó y analizó tráfico de red con herramientas como iPerf3 y tcpdump, y se integraron soluciones de monitoreo como Prometheus, Grafana y Zabbix para visualizar el estado del sistema. 
+Finalmente, se aplicaron políticas de control de tráfico (QoS), evidenciando su impacto en el rendimiento de la red. Esto demuestra la importancia de combinar monitoreo y gestión para optimizar el funcionamiento de infraestructuras de red.
