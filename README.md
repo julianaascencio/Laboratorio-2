@@ -26,32 +26,32 @@ La segmentación permite aislar dominios de broadcast, mejorar la organización 
 
 Las tecnologías implementadas en el laboratorio se agrupan según su función dentro de la arquitectura de red:
 
-### 🔧 Virtualización y sistema operativo
+###  Virtualización y sistema operativo
 - **VirtualBox**: Plataforma de virtualización utilizada para desplegar la infraestructura.
 - **Debian 13**: Sistema operativo base en todos los nodos (router y hosts).
 
-### 🌐 Redes y conectividad
+###  Redes y conectividad
 - **Redes internas (VirtualBox)**: Segmentación de la red en subredes aisladas.
 - **NAT**: Permite el acceso a internet desde redes privadas.
 - **IP forwarding (Linux)**: Habilita el enrutamiento entre subredes.
 - **iptables**: Configuración de reglas de NAT y filtrado de tráfico.
 
-### 📡 Generación y análisis de tráfico
+### Generación y análisis de tráfico
 - **iPerf3**: Generación de tráfico y medición del ancho de banda.
 - **tcpdump**: Captura de paquetes en tiempo real.
 - **Wireshark**: Análisis detallado de tráfico a nivel de paquetes.
 
-### 📊 Monitoreo y observabilidad
+###  Monitoreo y observabilidad
 - **Prometheus**: Recolección y almacenamiento de métricas del sistema.
 - **Node Exporter**: Exportación de métricas del sistema para Prometheus.
 - **Grafana**: Visualización de métricas mediante dashboards interactivos.
 - **Zabbix Agent**: Monitoreo del sistema basado en agentes.
 
-### 🔍 Análisis de flujo de red
+###  Análisis de flujo de red
 - **softflowd**: Simulación de exportación de flujos tipo NetFlow.
 - **NetFlow / IPFIX (concepto)**: Análisis del tráfico basado en flujos.
 
-### ⚙️ Control de tráfico
+###  Control de tráfico
 - **tc (Traffic Control)**: Implementación de políticas de calidad de servicio (QoS) para limitar y controlar el ancho de banda.
 
 ## Objetivos
